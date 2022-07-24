@@ -13,17 +13,14 @@ public class GugudanServlet extends HttpServlet { //서블릿은 HttpServlet라�
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        Rq rq = new Rq(req,resp);
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html; charset=utf-8");
 
-        int dan = Integer.parseInt(req.getParameter("dan"));
-        int limit = Integer.parseInt(req.getParameter("limit"));
+        int dan = rq.getIntParam("dan",9);
+        int limit =  rq.getIntParam("limit",9);
 
-        resp.getWriter().append("<h1>%d단</h1>\n".formatted(dan));
+        rq.appendBody("<h1>%d단</h1>\n".formatted(dan));
 
         for (int i = 1; i <= limit; i++) {
-            resp.getWriter().append("<div>%d * %d = %d</div>\n".formatted(dan, i, dan * i));
+            rq.appendBody("<div>%d * %d = %d</div>\n".formatted(dan, i, dan * i));
         }
     }
     }
